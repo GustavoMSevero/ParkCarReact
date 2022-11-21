@@ -7,7 +7,7 @@ import {
     Link,
 } from 'react-router-dom';
 
-import Login from '../Login/login';
+import Login from '../pages/Login/login';
 
 const router = createBrowserRouter([
     {
