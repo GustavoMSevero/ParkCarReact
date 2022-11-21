@@ -1,6 +1,9 @@
 import React from "react";
+import { useForm } from "react-hook-form";
 
 import { Container } from "./style";
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -8,6 +11,28 @@ import Form from "react-bootstrap/Form";
 import bk from "../../assets/bg_park_car.jpg";
 
 const Login: React.FC = () => {
+  const initState = {
+    email: "",
+    password: ""
+  }
+
+const onError = (error) => {
+  console.log("ERROR:::", error);
+}
+
+const onSubmit = (values) => {
+  console.log(values);
+  // console.log("VALUES:::", JSON.stringify(values));
+}
+
+const {
+  register,
+  handleSubmit,
+  getValues,
+  watch,
+  formState: { errors }
+} = useForm();
+
   return (
     <Container>
       <div className="leftSide">
@@ -15,26 +40,33 @@ const Login: React.FC = () => {
       </div>
       <div className="rightSide">
         <div className="">
-          <Form>
+          <Form onSubmit={handleSubmit(onSubmit, onError)}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" />
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-              </Form.Text>
+              <Form.Label>Email</Form.Label>
+              <Form.Control 
+                type="email" 
+                placeholder="john@gmail.com"
+                {...register("email",{required: "email obrigatório"})}
+                />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
+              <Form.Label>Senha</Form.Label>
+              <Form.Control 
+                type="password" 
+                placeholder="******" 
+                {...register("password", {required: "senha obrigatória"})}
+                />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check type="checkbox" label="Check me out" />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Submit
+            
+            <Button variant="success" type="submit">
+              Acessar
             </Button>
           </Form>
+          Estacionamento? 
+          <Button variant="link">
+              cadastre-se
+          </Button>
         </div>
       </div>
     </Container>
