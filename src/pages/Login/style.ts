@@ -9,6 +9,7 @@ export const Container = styled.div`
 
     .leftSide {
         flex: 1;
+        min-width: 400px;
         
         img {
             object-fit: cover;
@@ -19,8 +20,21 @@ export const Container = styled.div`
 
     .rightSide {
         display: flex;
+        flex-direction: column;
         justify-content: center;
-        align-items: center;
+        padding: 0 8rem;
         flex: 1;
+        max-width: 50%;
+
+
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+
+            div {
+                align-self: center;
+            }
+        }
     }
 `;
