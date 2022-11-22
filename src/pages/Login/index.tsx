@@ -42,6 +42,18 @@ const {
         <div className="">
           <Form onSubmit={handleSubmit(onSubmit, onError)}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Tipo</Form.Label>
+              <Form.Select 
+                aria-label="Default select example"
+                {...register("type",{required: "tipo obrigatório"})}
+                >
+                <option>Selecione...</option>
+                <option value="admin">Admin</option>
+                <option value="parking">Estacionamento</option>
+              </Form.Select>
+            </Form.Group>
+            
+            <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email</Form.Label>
               <Form.Control 
                 type="email" 
