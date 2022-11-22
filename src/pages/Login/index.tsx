@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { Link } from 'react-router-dom';
 
 import { Container } from "./style";
 
@@ -12,6 +13,7 @@ import bk from "../../assets/bg_park_car.jpg";
 
 const Login: React.FC = () => {
   const initState = {
+    type: "",
     email: "",
     password: ""
   }
@@ -76,9 +78,11 @@ const {
             </Button>
           </Form>
           Estacionamento? 
-          <Button variant="link">
-              cadastre-se
-          </Button>
+          <Link to="/register">
+            <Button variant="link">
+                cadastre-se
+            </Button>
+          </Link>
         </div>
       </div>
     </Container>
