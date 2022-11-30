@@ -8,6 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import api from '../../service/api';
 
 import bk from "../../assets/bg_park_car.jpg";
 
@@ -19,14 +20,18 @@ const Login: React.FC = () => {
     password: "",
   };
 
-  const onError = (error: any) => {
-    console.log("ERROR:::", error);
-  };
+const onError = (error) => {
+  console.log(error);
+}
 
-  const onSubmit = (values: any) => {
-    console.log(values);
-    // console.log("VALUES:::", JSON.stringify(values));
-  };
+const onSubmit = (values) => {
+  const login = api.post('sessions/parking', { email: values.email, password: values.password, type: values.type })
+    .then((response) => console.log(response))
+    .catch((error) => {
+      console.log(error)
+    });
+  
+}
 
   const {
     register,
