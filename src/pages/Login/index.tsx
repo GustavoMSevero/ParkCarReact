@@ -24,11 +24,11 @@ const Login: React.FC = () => {
 
   const [parking, setParking] = useAtom(parkingAtom);
 
-const onError = (error) => {
+const onError = (error: any) => {
   console.log(error);
 }
 
-const onSubmit = (values) => {
+const onSubmit = (values: any) => {
   const login = api.post('sessions/parking', { email: values.email, password: values.password, type: values.type })
     .then((response) => { 
       // console.log(response)
