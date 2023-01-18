@@ -1,6 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import { useAtom } from 'jotai'
+import { parkingAtom } from "../../store/userStore";
 
 import { Container } from "./style";
 
@@ -20,16 +22,31 @@ const Login: React.FC = () => {
     password: "",
   };
 
+  const [parking, setParking] = useAtom(parkingAtom);
+
 const onError = (error) => {
   console.log(error);
 }
 
 const onSubmit = (values) => {
   const login = api.post('sessions/parking', { email: values.email, password: values.password, type: values.type })
-    .then((response) => console.log(response))
+    .then((response) => { 
+      // console.log(response)
+      setParking({
+        idOwnerParking: response.data.user.idOwnerParking,
+        idParking: response.data.user.idParking,
+        ownerEmail: response.data.user.ownerEmail,
+        parkingName: response.data.user.parkingName,
+      })
+      navigate("/dashboard");
+    })
     .catch((error) => {
-      console.log(error)
+      // console.log(error)
+      if (error.response.status == 404) {
+        alert("Usuário não encontrado")
+      }
     });
+
   
 }
 
@@ -77,8 +94,7 @@ const onSubmit = (values) => {
               {...register("password", { required: "senha obrigatória" })}
             />
           </Form.Group>
-        </Form>
-        <div className="buttons">
+          <div className="buttons">
           <Button variant="success" type="submit">
             Acessar
           </Button>
@@ -89,6 +105,7 @@ const onSubmit = (values) => {
             </Button>
           </div>
         </div>
+        </Form>
       </div>
     </Container>
   );
