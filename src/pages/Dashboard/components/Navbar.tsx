@@ -26,14 +26,14 @@ const NavBar: React.FC = () => {
           Adicionar Estacionamento
         </li>
         <li onClick={() => navigate("/update-password")}>Atualizar Senha</li>
-        <li onClick={() => navigate("/teste")}>Clientes</li>
-        <li onClick={() => navigate("/teste")}>Vagas</li>
-        <li onClick={() => navigate("/teste")}>Convênios</li>
-        <li onClick={() => navigate("/teste")}>Financeiro</li>
-        <li onClick={() => navigate("/teste")}>Histórico</li>
-        <li onClick={() => navigate("/teste")}>Logo</li>
-        <li onClick={() => navigate("/teste")}>Reserva</li>
-        <li onClick={() => navigate("/teste")}>Dono Estacionamento</li>
+        <li onClick={() => navigate("/customer")}>Clientes</li>
+        <li onClick={() => navigate("/vaccancy")}>Vagas</li>
+        <li onClick={() => navigate("/agreement")}>Convênios</li>
+        <li onClick={() => navigate("/financial")}>Financeiro</li>
+        <li onClick={() => navigate("/history")}>Histórico</li>
+        <li onClick={() => navigate("/logo")}>Logo</li>
+        <li onClick={() => navigate("/reservation")}>Reserva</li>
+        <li onClick={() => navigate("/owner-parking")}>Dono Estacionamento</li>
         <li onClick={doLogout}>Sair</li>
       </ul>
     </NavBarContainer>
