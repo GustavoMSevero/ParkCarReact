@@ -46,7 +46,7 @@ const Login: React.FC = () => {
           parkingName: response.data.user.parkingName,
         });
         setToken(response.data.token);
-        navigate("/dashboard");
+        navigate("/");
       })
       .catch((error) => {
         // console.log(error)
