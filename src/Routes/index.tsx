@@ -14,7 +14,7 @@ import Register from "../pages/Register";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/login",
     element: <Login />,
   },
   {
@@ -22,15 +22,15 @@ const router = createBrowserRouter([
     element: <Register />,
   },
   {
-    path: "/dashboard",
+    path: "/",
     element: <Dashboard />,
     children: [
       {
-        path: "/dashboard/add-parking",
+        path: "/add-parking",
         element: <AddParking />,
       },
       {
-        path: "/dashboard/teste",
+        path: "/teste",
         element: <div>teste</div>,
       },
     ],
