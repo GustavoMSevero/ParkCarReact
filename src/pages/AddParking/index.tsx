@@ -2,6 +2,8 @@ import React from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useForm } from "react-hook-form";
+import api from '../../services/api';
+import apiCep from "../../services/api-cep";
 
 import { Container } from './style';
 
@@ -24,7 +26,13 @@ const AddParking: React.FC = () => {
   };
 
   const handleBlur = (e: any) => setZipcode(e.target.value);
-  console.log(zipcode)
+  
+  const getAddressByZipcode = async (zipcode: any) => {
+    const addressResult = await apiCep.get(zipcode+'/json/').then(
+      
+    )
+
+  }
 
   const onError = (error: any) => {
     console.log("ERROR:::", error);
