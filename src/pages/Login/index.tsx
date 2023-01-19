@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { useAtom } from 'jotai'
+import { useAtom } from "jotai";
 import { parkingAtom } from "../../store/userStore";
 
 import { Container } from "./style";
@@ -10,9 +10,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import api from '../../service/api';
+import api from "../../services/api";
 
 import bk from "../../assets/bg_park_car.jpg";
+import { tokenAtom } from "../../store/token";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -23,32 +24,37 @@ const Login: React.FC = () => {
   };
 
   const [parking, setParking] = useAtom(parkingAtom);
+  const [, setToken] = useAtom(tokenAtom);
 
-const onError = (error: any) => {
-  console.log(error);
-}
+  const onError = (error: any) => {
+    console.log(error);
+  };
 
-const onSubmit = (values: any) => {
-  const login = api.post('sessions/parking', { email: values.email, password: values.password, type: values.type })
-    .then((response) => { 
-      // console.log(response)
-      setParking({
-        idOwnerParking: response.data.user.idOwnerParking,
-        idParking: response.data.user.idParking,
-        ownerEmail: response.data.user.ownerEmail,
-        parkingName: response.data.user.parkingName,
+  const onSubmit = (values: any) => {
+    const login = api
+      .post("sessions/parking", {
+        email: values.email,
+        password: values.password,
+        type: values.type,
       })
-      navigate("/dashboard");
-    })
-    .catch((error) => {
-      // console.log(error)
-      if (error.response.status == 404) {
-        alert("Usuário não encontrado")
-      }
-    });
-
-  
-}
+      .then((response) => {
+        // console.log(response)
+        setParking({
+          idOwnerParking: response.data.user.idOwnerParking,
+          idParking: response.data.user.idParking,
+          ownerEmail: response.data.user.ownerEmail,
+          parkingName: response.data.user.parkingName,
+        });
+        setToken(response.data.token);
+        navigate("/dashboard");
+      })
+      .catch((error) => {
+        // console.log(error)
+        if (error.response.status == 404) {
+          alert("Usuário não encontrado");
+        }
+      });
+  };
 
   const {
     register,
@@ -95,16 +101,16 @@ const onSubmit = (values: any) => {
             />
           </Form.Group>
           <div className="buttons">
-          <Button variant="success" type="submit">
-            Acessar
-          </Button>
-          <div>
-            Estacionamento?
-            <Button onClick={() => navigate("/register")} variant="link">
-              Cadastre-se
+            <Button variant="success" type="submit">
+              Acessar
             </Button>
+            <div>
+              Estacionamento?
+              <Button onClick={() => navigate("/register")} variant="link">
+                Cadastre-se
+              </Button>
+            </div>
           </div>
-        </div>
         </Form>
       </div>
     </Container>
