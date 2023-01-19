@@ -1,11 +1,24 @@
 import styled from "@emotion/styled";
+import { useAtom } from "jotai";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { tokenAtom } from "../../../store/token";
+import { parkingAtom } from "../../../store/userStore";
 
 // import { Container } from './styles';
 
 const NavBar: React.FC = () => {
   const navigate = useNavigate();
+
+  const [, setParking] = useAtom(parkingAtom);
+  const [, setToken] = useAtom(tokenAtom);
+
+  const doLogout = () => {
+    setParking({});
+    setToken("");
+    navigate("/login");
+  };
+
   return (
     <NavBarContainer>
       <ul>
@@ -21,7 +34,7 @@ const NavBar: React.FC = () => {
         <li onClick={() => navigate("/teste")}>Logo</li>
         <li onClick={() => navigate("/teste")}>Reserva</li>
         <li onClick={() => navigate("/teste")}>Dono Estacionamento</li>
-        <li onClick={() => navigate("/teste")}>Sair</li>
+        <li onClick={doLogout}>Sair</li>
       </ul>
     </NavBarContainer>
   );
