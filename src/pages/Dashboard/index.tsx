@@ -1,17 +1,23 @@
 import styled from "@emotion/styled";
-import { Stack } from "@mui/system";
+import { useAtomValue } from "jotai";
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import useCollapseDrawer from "../../hooks/useCollapseDrawer";
-import useResponsive from "../../hooks/useResponsive";
+import { tokenAtom } from "../../store/token";
 import ContentHeader from "./components/ContentHeader";
 import DashboardHeader from "./components/Header";
 import NavBar from "./components/Navbar";
 
-// import { Container } from './styles';
-
 const Dashboard: React.FC = () => {
   const { collapseClick, isCollapse } = useCollapseDrawer();
+
+  const navigate = useNavigate();
+  const token = useAtomValue(tokenAtom);
+
+  if (!token) {
+    navigate("/login");
+  }
+
   return (
     <Wrapper>
       <Sidebar>
