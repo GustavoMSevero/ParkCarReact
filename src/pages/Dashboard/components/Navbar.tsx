@@ -25,7 +25,7 @@ const NavBar: React.FC = () => {
         <li onClick={() => navigate("/add-parking")}>
           Adicionar Estacionamento
         </li>
-        <li onClick={() => navigate("/teste")}>Atualizar Senha</li>
+        <li onClick={() => navigate("/update-password")}>Atualizar Senha</li>
         <li onClick={() => navigate("/teste")}>Clientes</li>
         <li onClick={() => navigate("/teste")}>Vagas</li>
         <li onClick={() => navigate("/teste")}>Convênios</li>
