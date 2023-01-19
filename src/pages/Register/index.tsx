@@ -37,7 +37,7 @@ const Register: React.FC = () => {
   return (
     <Container>
       <div className="register-box">
-        <h3>Cadastro Estacionamento</h3>
+        <h3>Cadastro dono do Estacionamento</h3>
 
         <Form onSubmit={handleSubmit(onSubmit, onError)}>
           <Form.Group className="mb-2" controlId="formBasicEmail">
