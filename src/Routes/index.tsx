@@ -11,6 +11,7 @@ import Dashboard from "../pages/Dashboard";
 
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import UpdatePassword from "../pages/UpdatePassword";
 
 const router = createBrowserRouter([
   {
@@ -30,8 +31,8 @@ const router = createBrowserRouter([
         element: <AddParking />,
       },
       {
-        path: "/teste",
-        element: <div>teste</div>,
+        path: "/update-password",
+        element: <UpdatePassword />,
       },
     ],
   },
