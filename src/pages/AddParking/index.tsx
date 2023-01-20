@@ -1,38 +1,59 @@
-import React from "react";
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import { useForm } from "react-hook-form";
-import api from '../../services/api';
+import { Button, Container, Grid } from "@mui/material";
+import React, { useEffect } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { SelectRHF } from "../../components/Inputs/Select";
+import { TextInputRHF } from "../../components/Inputs/TextInput";
+import MainCard from "../../components/MainCard";
+import api from "../../services/api";
 import apiCep from "../../services/api-cep";
-
-import { Container } from './style';
+import { STATES } from "../../utils/states";
 
 const AddParking: React.FC = () => {
-  const [zipcode, setZipcode] = React.useState('');
+  const methods = useForm({
+    defaultValues: {
+      zipcode: "",
+      address: "",
+      addressNumber: "",
+      addressComplement: "",
+      neighborhood: "",
+      city: "",
+      uf: "",
+      parkingName: "",
+      numberOfVacancies: "",
 
-  const initState = {
-    zipcode: "",
-    address: "",
-    addressNumber: "",
-    addressComplement: "",
-    neighborhood: "",
-    city: "",
-    uf: "",
-    parkingName: "",
-    numberOfVacancies: "",
+      emailApp: "",
+      passwordApp: "",
+    },
+  });
 
-    emailApp: "",
-    passwordApp: "",
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    getValues,
+    watch,
+    formState: { errors },
+  } = methods;
+
+  // Aqui Busca de CEP
+
+  const getAddressByZipcode = async (zipcode: string) => {
+    await apiCep.get(zipcode + "/json/").then(({ data }) => {
+      console.log(data);
+      setValue("address", data.logradouro);
+      setValue("city", data.localidade);
+      setValue("neighborhood", data.bairro);
+      setValue("uf", data.uf);
+    });
   };
 
-  const handleBlur = (e: any) => setZipcode(e.target.value);
-  
-  const getAddressByZipcode = async (zipcode: any) => {
-    const addressResult = await apiCep.get(zipcode+'/json/').then(
-      
-    )
+  useEffect(() => {
+    const zipcode = watch("zipcode");
 
-  }
+    if (zipcode.length === 8) {
+      getAddressByZipcode(zipcode);
+    }
+  }, [watch("zipcode")]);
 
   const onError = (error: any) => {
     console.log("ERROR:::", error);
@@ -43,103 +64,68 @@ const AddParking: React.FC = () => {
     console.log(values);
   };
 
-  const {
-    register,
-    handleSubmit,
-    getValues,
-    watch,
-    formState: { errors },
-  } = useForm();
-
   return (
-    <Container>
-      <div className="register-box">
-      <h3>Cadastro de Estacionamento</h3>
-      <Form onSubmit={handleSubmit(onSubmit, onError)} >
-        <Form.Group className="mb-3" onBlur={handleBlur} controlId="formZipcode">
-          <Form.Label>CEP</Form.Label>
-          <Form.Control
-            type="text"
-            {...register("zipcode", { required: "campo obrigatório" })}/>
-        </Form.Group>
+    <MainCard darkTitle title="Cadastro de Estacionamento">
+      <FormProvider {...methods}>
+        <Grid container xs={12}>
+          <Grid container spacing={2}>
+            <Grid item sm={12} md={2}>
+              <TextInputRHF
+                name="zipcode"
+                label="CEP"
+                inputProps={{ maxLength: 8 }}
+              />
+            </Grid>
+            <Grid item sm={12} md={6}>
+              <TextInputRHF name="address" label="Endereço" />
+            </Grid>
+            <Grid item sm={12} md={2}>
+              <TextInputRHF name="addressNumber" label="Número" />
+            </Grid>
+            <Grid item sm={12} md={2}>
+              <TextInputRHF name="addressComplement" label="Complemento" />
+            </Grid>
 
-        <Form.Group className="mb-3" controlId="formAddress">
-          <Form.Label>Endereço</Form.Label>
-          <Form.Control
-            type="text"
-            {...register("address")}/>
-        </Form.Group>
-        
-        <Form.Group className="mb-3" controlId="formAddressNumber">
-          <Form.Label>Número</Form.Label>
-          <Form.Control 
-            type="number"
-            {...register("addressNumber")}/>
+            <Grid item sm={12} md={2}>
+              <TextInputRHF name="neighborhood" label="Bairro" />
+            </Grid>
+            <Grid item sm={12} md={8}>
+              <TextInputRHF name="city" label="Cidade" />
+            </Grid>
+            <Grid item sm={12} md={2}>
+              <SelectRHF
+                name="uf"
+                label="UF"
+                options={STATES.map((state) => ({
+                  label: state.sigla,
+                  value: state.sigla,
+                }))}
+              />
+            </Grid>
 
-        </Form.Group>
+            <Grid item sm={12} md={10}>
+              <TextInputRHF name="parkingName" label="Nome do Estacionamento" />
+            </Grid>
+            <Grid item sm={12} md={2}>
+              <TextInputRHF name="numberOfVacancies" label="Número de Vagas" />
+            </Grid>
 
-        <Form.Group className="mb-3" controlId="formAddressComplement">
-          <Form.Label>Complemento</Form.Label>
-          <Form.Control 
-            type="text"
-            {...register("addressComplement")}/>
-        </Form.Group>
+            <Grid item sm={12} md={6}>
+              <TextInputRHF name="email" label="E-mail" />
+            </Grid>
+            <Grid item sm={12} md={6}>
+              <TextInputRHF name="password" label="Senha" />
+            </Grid>
 
-        <Form.Group className="mb-3" controlId="formNeighborhood">
-          <Form.Label>Bairro</Form.Label>
-          <Form.Control 
-            type="text" 
-            {...register("neighborhood")}/>
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formCity">
-          <Form.Label>Cidade</Form.Label>
-          <Form.Control 
-            type="text" 
-            {...register("city")}/>
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formUF">
-          <Form.Label>UF</Form.Label>
-          <Form.Control 
-            type="text"
-            {...register("uf")}/>
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formParkingName">
-          <Form.Label>Nome do Estacionamento</Form.Label>
-          <Form.Control 
-            type="text"
-            {...register("parkingName")}/>
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formNumberOfVacancies">
-          <Form.Label>Quantidade de vagas</Form.Label>
-          <Form.Control 
-            type="number"
-            {...register("numberOfVacancies")}/>
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formEmail">
-          <Form.Label>Email</Form.Label>
-          <Form.Control 
-            type="text"
-            {...register("emailApp")}/>
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formPassword">
-          <Form.Label>Senha</Form.Label>
-          <Form.Control 
-            type="text"
-            {...register("passwordApp")}/>
-        </Form.Group>
-
-        <Button variant="success" type="submit">
-          Cadastrar
-        </Button>
-      </Form>
-      </div>
-    </Container>
+            <Grid item sm={12} md={12}>
+              <Button variant="contained" color="success" type="submit">
+                Cadastrar
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
+      </FormProvider>
+    </MainCard>
   );
 };
 
