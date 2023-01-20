@@ -1,10 +1,9 @@
+import { Button, Card, Divider } from "@mui/material";
+import { Stack } from "@mui/system";
 import React from "react";
-import { useForm } from "react-hook-form";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import { FormProvider, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-
-import "bootstrap/dist/css/bootstrap.min.css";
+import { TextInputRHF } from "../../components/Inputs/TextInput";
 import { Container } from "./style";
 
 // import { Container } from './styles';
@@ -17,66 +16,34 @@ const Register: React.FC = () => {
     ownerPassword: "",
   };
 
-  const onError = (error: any) => {
-    console.log("ERROR:::", error);
-  };
-
-  const onSubmit = (values: any) => {
-    values.option = "register parking";
-    console.log(values);
-  };
-
-  const {
-    register,
-    handleSubmit,
-    getValues,
-    watch,
-    formState: { errors },
-  } = useForm();
+  const methods = useForm();
 
   return (
     <Container>
-      <div className="register-box">
-        <h3>Cadastro dono do Estacionamento</h3>
+      <Card elevation={12} sx={{ p: 4, width: 400 }}>
+        <Stack spacing={2}>
+          <h3>Cadastro dono do Estacionamento</h3>
+          <Divider />
 
-        <Form onSubmit={handleSubmit(onSubmit, onError)}>
-          <Form.Group className="mb-2" controlId="formBasicEmail">
-            <Form.Label>Proprietário</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Afonso Severo"
-              {...register("ownerName", { required: "campo obrigatório" })}
-            />
-          </Form.Group>
-          <Form.Group className="mb-2" controlId="formBasicEmail">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="john@gmail.com"
-              {...register("ownerEmail", { required: "email obrigatório" })}
-            />
-          </Form.Group>
+          <FormProvider {...methods}>
+            <TextInputRHF name="name" label="Nome do Proprietário" />
+            <TextInputRHF name="email" label="E-mail" />
+            <TextInputRHF name="password" label="Senha" />
 
-          <Form.Group className="mb-2" controlId="formBasicPassword">
-            <Form.Label>Senha</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="******"
-              {...register("ownerPassword", { required: "senha obrigatória" })}
-            />
-          </Form.Group>
-
-          <div className="buttons mt-5">
-            <Button className="mb-2" variant="success" type="submit">
+            <Button variant="contained" color="success">
               Cadastrar
             </Button>
 
-            <Button onClick={() => navigate("/")} variant="light">
+            <Button
+              onClick={() => navigate("/login")}
+              variant="outlined"
+              color="info"
+            >
               Voltar
             </Button>
-          </div>
-        </Form>
-      </div>
+          </FormProvider>
+        </Stack>
+      </Card>
     </Container>
   );
 };

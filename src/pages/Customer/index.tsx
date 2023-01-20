@@ -1,98 +1,81 @@
-import React from 'react';
-import Button from 'react-bootstrap/Button';
-import Table from 'react-bootstrap/Table';
-import Form from 'react-bootstrap/Form';
-import { useForm } from "react-hook-form";
-import api from '../../services/api';
+import React from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import api from "../../services/api";
+import MainCard from "../../components/MainCard";
+import { Grid, Button } from "@mui/material";
+import { TextInputRHF } from "../../components/Inputs/TextInput";
+import { SelectRHF } from "../../components/Inputs/Select";
 
 // import { Container } from './styles';
 
 const Customer: React.FC = () => {
-  const initState = {
-    name: "",
-    secondname: "",
-    licensePlate: "",
-    startDate: "",
-    endDate: "",
-  };
-
-  const onError = (error: any) => {
-    console.log("ERROR:::", error);
-  };
-
-  const onSubmit = (values: any) => {
-    values.option = "register contract";
-    console.log(values);
-  };
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const methods = useForm({
+    defaultValues: {
+      name: "",
+      lastName: "",
+      licensePlate: "",
+      startDate: new Date(),
+      endDate: new Date(),
+    },
+  });
 
   return (
-    <>
-      <h2>Cadastro de Clientes</h2>
-      <Form onSubmit={handleSubmit(onSubmit, onError)} >
-        <Form.Group className="mb-3" controlId="formName">
-          <Form.Label>Nome</Form.Label>
-          <Form.Control
-            type="text"
-            {...register("name", { required: "campo obrigatório" })}/>
-        </Form.Group>
+    <MainCard title="Cadastro de Clientes">
+      <FormProvider {...methods}>
+        <Grid container xs={12}>
+          <Grid container spacing={2}>
+            <Grid item sm={12} md={4.5}>
+              <TextInputRHF name="name" label="Nome" />
+            </Grid>
+            <Grid item sm={12} md={4.5}>
+              <TextInputRHF name="lastName" label="Sobrenome" />
+            </Grid>
+            <Grid item sm={12} md={3}>
+              <TextInputRHF name="licensePlate" label="Placa" />
+            </Grid>
 
-        <Form.Group className="mb-3" controlId="formSecondName">
-          <Form.Label>Sobrenome</Form.Label>
-          <Form.Control
-            type="text"
-            {...register("secondname", { required: "campo obrigatório" })}/>
-        </Form.Group>
+            <Grid item sm={12} md={4}>
+              <SelectRHF
+                name="contract"
+                label="Selecionar Contrato"
+                options={[{ label: "teste", value: "teste" }]}
+              />
+            </Grid>
 
-        <Form.Group className="mb-3" controlId="formLicensePlate">
-          <Form.Label>Placa</Form.Label>
-          <Form.Control
-            type="text"
-            {...register("licensePlate", { required: "campo obrigatório" })}/>
-        </Form.Group>
+            <Grid item sm={12} md={4}>
+              <TextInputRHF
+                name="startDate"
+                label="Início do Contrato"
+                inputProps={{ type: "date" }}
+              />
+            </Grid>
 
-        <Form.Select aria-label="Default select example">
-          <option>Selecione contrato</option>
-          <option value="1">One</option>
-        </Form.Select>
+            <Grid item sm={12} md={4}>
+              <TextInputRHF
+                name="endDate"
+                label="Fim do Contrato"
+                inputProps={{ type: "date" }}
+              />
+            </Grid>
 
-        <Form.Group className="mb-3" controlId="formStartDate">
-          <Form.Label>Início contrato</Form.Label>
-          <Form.Control
-            type="date"
-            {...register("startDate", { required: "campo obrigatório" })}/>
-        </Form.Group>
+            <Grid item sm={12} md={4}>
+              <SelectRHF
+                name="contract"
+                label="Selecionar o andar"
+                options={[{ label: "1", value: "1" }]}
+              />
+            </Grid>
 
-        <Form.Group className="mb-3" controlId="formEndDate">
-          <Form.Label>Fim contrato</Form.Label>
-          <Form.Control
-            type="date"
-            {...register("endDate", { required: "campo obrigatório" })}/>
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formEndDate">
-          <Form.Label>Fim contrato</Form.Label>
-          <Form.Control
-            type="date"
-            {...register("endDate", { required: "campo obrigatório" })}/>
-        </Form.Group>
-
-        <Form.Select aria-label="Default select example">
-          <option>Selecione o andar</option>
-          <option value="1">One</option>
-        </Form.Select>
-
-        <Button variant="success" type="submit">
-          Cadastrar
-        </Button>
-      </Form>
-      </>
+            <Grid item sm={12} md={12}>
+              <Button variant="contained" color="success" type="submit">
+                Cadastrar
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
+      </FormProvider>
+    </MainCard>
   );
-}
+};
 
 export default Customer;
