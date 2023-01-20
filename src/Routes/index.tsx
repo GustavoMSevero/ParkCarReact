@@ -12,6 +12,8 @@ import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import UpdatePassword from "../pages/UpdatePassword";
+import Customer from "../pages/Customer";
+import Contract from "../pages/Contract";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +35,14 @@ const router = createBrowserRouter([
       {
         path: "/update-password",
         element: <UpdatePassword />,
+      },
+      {
+        path: "/customer",
+        element: <Customer />,
+      },
+      {
+        path: "/contract",
+        element: <Contract />,
       },
     ],
   },
