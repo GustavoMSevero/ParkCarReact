@@ -20,9 +20,6 @@ const AddParking: React.FC = () => {
       uf: "",
       parkingName: "",
       numberOfVacancies: "",
-
-      emailApp: "",
-      passwordApp: "",
     },
   });
 
@@ -62,6 +59,7 @@ const AddParking: React.FC = () => {
   const onSubmit = (values: any) => {
     values.option = "register parking";
     console.log(values);
+    const registerParking = api.post("ownerParking", values).then()
   };
 
   return (
@@ -114,11 +112,11 @@ const AddParking: React.FC = () => {
               <TextInputRHF name="email" label="E-mail" />
             </Grid>
             <Grid item sm={12} md={6}>
-              <TextInputRHF name="password" label="Senha" />
+              <TextInputRHF type="password" name="password" label="Senha" />
             </Grid>
 
             <Grid item sm={12} md={12}>
-              <Button variant="contained" color="success" type="submit">
+              <Button variant="contained" color="success" type="submit" onClick={methods.handleSubmit(onSubmit, onError)}>
                 Cadastrar
               </Button>
             </Grid>
