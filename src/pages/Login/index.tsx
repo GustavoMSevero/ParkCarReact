@@ -79,7 +79,7 @@ const Login: React.FC = () => {
           <Stack spacing={2}>
             <SelectRHF name="type" label="Tipo" options={loginTypes} />
             <TextInputRHF name="email" label="E-mail" />
-            <TextInputRHF name="password" label="Senha" />
+            <TextInputRHF name="password" type="password" label="Senha" />
 
             <Button variant="contained" color="success">
               Acessar
