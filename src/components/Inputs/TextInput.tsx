@@ -16,7 +16,6 @@ export const TextInputRHF = ({ name, inputProps, ...rest }: any) => {
     field: ControllerRenderProps;
     fieldState: ControllerFieldState;
   }) => {
-    console.log(value);
     return (
       <TextField
         inputProps={inputProps}
