@@ -2,9 +2,42 @@ import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import api from "../../services/api";
 import MainCard from "../../components/MainCard";
-import { Grid, Button } from "@mui/material";
+import { 
+  Grid, 
+  Button, 
+  TableContainer, 
+  Paper, 
+  Table, 
+  TableHead, 
+  TableRow, 
+  TableBody, 
+  styled, 
+  TableCell, 
+  tableCellClasses 
+} from "@mui/material";
+
 import { TextInputRHF } from "../../components/Inputs/TextInput";
 import { SelectRHF } from "../../components/Inputs/Select";
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
 
 // import { Container } from './styles';
 
@@ -66,6 +99,20 @@ const Customer: React.FC = () => {
               />
             </Grid>
 
+            <Grid item sm={12} md={4}>
+              <SelectRHF
+                name="B"
+                label="Prédio"
+                options={[
+                  { label: "B1", value: "B1" }, 
+                  { label: "B2", value: "B2" }
+                ]}
+              />
+            </Grid>
+            <Grid item sm={12} md={4}>
+              <TextInputRHF name="box" label="box" />
+            </Grid>
+
             <Grid item sm={12} md={12}>
               <Button variant="contained" color="success" type="submit">
                 Cadastrar
@@ -74,7 +121,36 @@ const Customer: React.FC = () => {
           </Grid>
         </Grid>
       </FormProvider>
+
+      <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 700 }} aria-label="customized table">
+        <TableHead>
+          <TableRow>
+            <StyledTableCell>Cliente</StyledTableCell>
+            <StyledTableCell align="center">Placa</StyledTableCell>
+            <StyledTableCell align="center">Prédio</StyledTableCell>
+            <StyledTableCell align="center">Andar</StyledTableCell>
+            <StyledTableCell align="center">Box</StyledTableCell>
+            <StyledTableCell align="center">Vigência</StyledTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {/* {rows.map((row) => (
+            <StyledTableRow key={row.name}>
+              <StyledTableCell component="th" scope="row">
+                {row.name}
+              </StyledTableCell>
+              <StyledTableCell align="right">{row.calories}</StyledTableCell>
+              <StyledTableCell align="right">{row.fat}</StyledTableCell>
+              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
+              <StyledTableCell align="right">{row.protein}</StyledTableCell>
+            </StyledTableRow>
+          ))} */}
+        </TableBody>
+      </Table>
+    </TableContainer>
     </MainCard>
+
   );
 };
 
