@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
 import { parkingAtom } from "../../store/userStore";
-import { ownerAtom } from "../../store/ownerStore"
+import { ownerAtom } from "../../store/ownerStore";
 
 import { Container } from "./style";
 
@@ -25,7 +25,7 @@ const Login: React.FC = () => {
   };
 
   const [owner, setOwner] = useAtom(ownerAtom);
-  const [, setToken] = useAtom(tokenAtom);
+  const [, setToken] = useAtom(tokenAtom as any);
 
   const onError = (error: any) => {
     console.log(error);
@@ -38,14 +38,10 @@ const Login: React.FC = () => {
         password: values.password,
         type: values.type,
       })
-      .then((response) => {
-        console.log(response)
-        setOwner({
-          id_owner_parking: response.data.user.id_owner_parking,
-          ownerEmail: response.data.user.owner_email,
-          ownerName: response.data.user.owner_name,
-        });
-        setToken(response.data.token);
+      .then(({ data }) => {
+        console.log(data.user);
+        setOwner(data.user);
+        setToken(data.token);
         navigate("/");
       })
       .catch((error) => {
@@ -81,7 +77,11 @@ const Login: React.FC = () => {
             <TextInputRHF name="email" label="E-mail" />
             <TextInputRHF name="password" type="password" label="Senha" />
 
-            <Button variant="contained" color="success" onClick={methods.handleSubmit(onSubmit, onError)}>
+            <Button
+              variant="contained"
+              color="success"
+              onClick={methods.handleSubmit(onSubmit, onError)}
+            >
               Acessar
             </Button>
 
