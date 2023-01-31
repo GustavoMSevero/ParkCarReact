@@ -3,18 +3,18 @@ import { useAtom } from "jotai";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { tokenAtom } from "../../../store/token";
-import { parkingAtom } from "../../../store/userStore";
+import { ownerAtom } from "../../../store/ownerStore";
 
 // import { Container } from './styles';
 
 const NavBar: React.FC = () => {
   const navigate = useNavigate();
 
-  const [, setParking] = useAtom(parkingAtom);
-  const [, setToken] = useAtom(tokenAtom);
+  const [, setOwner] = useAtom(ownerAtom);
+  const [, setToken] = useAtom(tokenAtom as any);
 
   const doLogout = () => {
-    setParking({});
+    setOwner({});
     setToken("");
     navigate("/login");
   };
