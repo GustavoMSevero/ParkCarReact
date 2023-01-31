@@ -7,8 +7,12 @@ import MainCard from "../../components/MainCard";
 import api from "../../services/api";
 import apiCep from "../../services/api-cep";
 import { STATES } from "../../utils/states";
+import { useAtom } from "jotai";
+import { ownerAtom } from "../../store/ownerStore";
 
 const AddParking: React.FC = () => {
+  const [owner, setOwner] = useAtom(ownerAtom);
+
   const methods = useForm({
     defaultValues: {
       zipcode: "",
@@ -17,7 +21,7 @@ const AddParking: React.FC = () => {
       addressComplement: "",
       neighborhood: "",
       city: "",
-      uf: "",
+      state: "",
       parkingName: "",
       numberOfVacancies: "",
     },
@@ -36,11 +40,11 @@ const AddParking: React.FC = () => {
 
   const getAddressByZipcode = async (zipcode: string) => {
     await apiCep.get(zipcode + "/json/").then(({ data }) => {
-      console.log(data);
+      // console.log(data);
       setValue("address", data.logradouro);
       setValue("city", data.localidade);
       setValue("neighborhood", data.bairro);
-      setValue("uf", data.uf);
+      setValue("state", data.uf);
     });
   };
 
@@ -58,8 +62,11 @@ const AddParking: React.FC = () => {
 
   const onSubmit = (values: any) => {
     values.option = "register parking";
+    values.idOwnerParking = owner.id_owner_parking;
     console.log(values);
-    const registerParking = api.post("ownerParking", values).then()
+    const registerParking = api.post("parking", values).then((response) => {
+      console.log(response)
+    }).catch(error => console.log(error))
   };
 
   return (
@@ -92,7 +99,7 @@ const AddParking: React.FC = () => {
             </Grid>
             <Grid item sm={12} md={2}>
               <SelectRHF
-                name="uf"
+                name="state"
                 label="UF"
                 options={STATES.map((state) => ({
                   label: state.sigla,
@@ -105,7 +112,7 @@ const AddParking: React.FC = () => {
               <TextInputRHF name="parkingName" label="Nome do Estacionamento" />
             </Grid>
             <Grid item sm={12} md={2}>
-              <TextInputRHF name="numberOfVacancies" label="Número de Vagas" />
+              <TextInputRHF name="vaccantNumber" label="Número de Vagas" />
             </Grid>
 
             <Grid item sm={12} md={6}>
