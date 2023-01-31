@@ -69,6 +69,13 @@ const AddParking: React.FC = () => {
     }).catch(error => console.log(error))
   };
 
+  const loadParkings = () => {
+    owner.id_owner_parking;
+    const loadParkingData = api.get("").then((response) => {
+      console.log(response)
+    })
+  }
+
   return (
     <MainCard darkTitle title="Cadastro de Estacionamento">
       <FormProvider {...methods}>
