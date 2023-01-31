@@ -5,13 +5,17 @@ import createAvatar from "../../utils/createAvatar";
 //
 import Avatar from "../Avatar";
 
+import { useAtom } from "jotai";
+import { ownerAtom } from "../../store/ownerStore";
+
 // ----------------------------------------------------------------------
 
 export default function MyAvatar({ ...other }) {
   //   const { user } = useAuth();
+  const [owner, setOwner] = useAtom(ownerAtom);
   const user = {
     photoURL: "",
-    displayName: "Velcis Ribeiro",
+    displayName: owner.owner_name,
   };
 
   return (
