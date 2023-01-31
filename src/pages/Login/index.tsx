@@ -2,7 +2,6 @@ import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
-import { parkingAtom } from "../../store/userStore";
 import { ownerAtom } from "../../store/ownerStore";
 
 import { Container } from "./style";
@@ -39,7 +38,6 @@ const Login: React.FC = () => {
         type: values.type,
       })
       .then(({ data }) => {
-        console.log(data.user);
         setOwner(data.user);
         setToken(data.token);
         navigate("/");
