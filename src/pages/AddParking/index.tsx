@@ -60,18 +60,24 @@ const AddParking: React.FC = () => {
     console.log("ERROR:::", error);
   };
 
+  useEffect(() => {
+    loadParkings();
+  },[])
+
   const onSubmit = (values: any) => {
     values.option = "register parking";
     values.idOwnerParking = owner.id_owner_parking;
-    console.log(values);
     const registerParking = api.post("parking", values).then((response) => {
-      console.log(response)
+  
     }).catch(error => console.log(error))
   };
 
   const loadParkings = () => {
-    owner.id_owner_parking;
-    const loadParkingData = api.get("").then((response) => {
+    const loadParkingData = api.get("parking", {
+      params: {
+        'idOwnerParking' : owner.id_owner_parking
+      },
+    }).then((response) => {
       console.log(response)
     })
   }
