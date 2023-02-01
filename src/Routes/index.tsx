@@ -14,6 +14,7 @@ import Register from "../pages/Register";
 import UpdatePassword from "../pages/UpdatePassword";
 import Customer from "../pages/Customer";
 import Contract from "../pages/Contract";
+import Vaccancy from "../pages/Vaccancy";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: "/customer",
         element: <Customer />,
+      },
+      {
+        path: "/vaccancy",
+        element: <Vaccancy />,
       },
       {
         path: "/contract",
