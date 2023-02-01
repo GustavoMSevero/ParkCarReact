@@ -52,6 +52,18 @@ const Customer: React.FC = () => {
     },
   });
 
+  const floorOptions = [
+    { label: "8º Andar", value: "8" },
+    { label: "7º Andar", value: "7" },
+    { label: "6º Andar", value: "6" },
+    { label: "5º Andar", value: "5" },
+    { label: "4º Andar", value: "4" },
+    { label: "3º Andar", value: "3" },
+    { label: "2º Andar", value: "2" },
+    { label: "1º Andar", value: "1" },
+    { label: "Térreo", value: "Térreo" }, 
+];
+
   return (
     <MainCard title="Cadastro de Clientes">
       <FormProvider {...methods}>
@@ -95,7 +107,7 @@ const Customer: React.FC = () => {
               <SelectRHF
                 name="contract"
                 label="Selecionar o andar"
-                options={[{ label: "1", value: "1" }]}
+                options={floorOptions}
               />
             </Grid>
 
