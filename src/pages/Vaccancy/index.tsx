@@ -15,14 +15,14 @@ const buildingOptions = [
 ];
 
 const floorOptions = [
-    { label: "8º", value: "8" },
-    { label: "7º", value: "7" },
-    { label: "6º", value: "6" },
-    { label: "5º", value: "5" },
-    { label: "4º", value: "4" },
-    { label: "3º", value: "3" },
-    { label: "2º", value: "2" },
-    { label: "1º", value: "1" },
+    { label: "8º Andar", value: "8" },
+    { label: "7º Andar", value: "7" },
+    { label: "6º Andar", value: "6" },
+    { label: "5º Andar", value: "5" },
+    { label: "4º Andar", value: "4" },
+    { label: "3º Andar", value: "3" },
+    { label: "2º Andar", value: "2" },
+    { label: "1º Andar", value: "1" },
     { label: "Térreo", value: "Térreo" }, 
 ];
 
@@ -51,16 +51,16 @@ const {
                 <Grid container spacing={2}>
                     <Grid item sm={12} md={4}>
                         <SelectRHF
-                            name="building"
-                            label="Prédio"
-                            options={buildingOptions}
+                            name="floor"
+                            label="Andar"
+                            options={floorOptions}
                         />
                     </Grid>
                     <Grid item sm={12} md={4}>
                         <SelectRHF
-                            name="floor"
-                            label="Andar"
-                            options={floorOptions}
+                            name="building"
+                            label="Prédio"
+                            options={buildingOptions}
                         />
                     </Grid>
                     <Grid item sm={12} md={3}>
