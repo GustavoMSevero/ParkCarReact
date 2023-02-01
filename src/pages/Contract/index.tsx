@@ -2,7 +2,7 @@ import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import MainCard from "../../components/MainCard";
 import { TextInputRHF } from "../../components/Inputs/TextInput";
-import { Button, Divider, Grid } from "@mui/material";
+import { Button, Divider, Grid, Table } from "@mui/material";
 import { TableContract } from "./components/Table";
 
 // import { Container } from './styles';
@@ -30,7 +30,7 @@ const Contract: React.FC = () => {
     <MainCard title="Cadastro de Contrato">
       <FormProvider {...methods}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs={4}>
             <TextInputRHF name="contract" label="Contrato" />
           </Grid>
 
@@ -54,31 +54,17 @@ const Contract: React.FC = () => {
 
   return (
     <>
-      <h2>Cadastro de Contrato</h2>
-      <Form onSubmit={handleSubmit(onSubmit, onError)}>
-        <Form.Group className="mb-3" controlId="formZipcode">
-          <Form.Label>Contrato</Form.Label>
-          <Form.Control
-            type="text"
-            {...register("contract", { required: "campo obrigatório" })}
-          />
-        </Form.Group>
-        <Button variant="success" type="submit">
-          Cadastrar
-        </Button>
-      </Form>
-
-      <Table striped bordered hover>
+      <Table>
         <thead>
           <tr>
             <th>#</th>
-            <th>Tipo de Contrato</th>
+            <th align="left">Tipo de Contrato</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>1</td>
-            <td>Mark</td>
+            <td align="left">Mark</td>
           </tr>
         </tbody>
       </Table>
