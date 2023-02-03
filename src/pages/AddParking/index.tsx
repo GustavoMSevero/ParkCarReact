@@ -73,11 +73,7 @@ const AddParking: React.FC = () => {
   };
 
   const loadParkings = () => {
-    const loadParkingData = api.get("parking", {
-      params: {
-        'idOwnerParking' : owner.id_owner_parking
-      },
-    }).then((response) => {
+    const loadParkingData = api.get("ownerParking/"+owner.id_owner_parking).then((response) => {
       console.log(response)
     })
   }
