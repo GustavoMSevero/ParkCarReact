@@ -1,17 +1,50 @@
 import { Button, Container, Grid } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { SelectRHF } from "../../components/Inputs/Select";
 import { TextInputRHF } from "../../components/Inputs/TextInput";
 import MainCard from "../../components/MainCard";
+import { 
+  TableContainer, 
+  Paper, 
+  Table, 
+  TableHead, 
+  TableRow, 
+  TableBody, 
+  styled, 
+  TableCell, 
+  tableCellClasses 
+} from "@mui/material";
 import api from "../../services/api";
 import apiCep from "../../services/api-cep";
 import { STATES } from "../../utils/states";
 import { useAtom } from "jotai";
 import { ownerAtom } from "../../store/ownerStore";
 
+type Parking = {
+  id_parking: number,
+  parking_name: string,
+  address: string,
+  address_number: number,
+  city: string,
+  state: string,
+  vaccant_number: number,
+}
+
 const AddParking: React.FC = () => {
   const [owner, setOwner] = useAtom(ownerAtom);
+  const [parkingData, setParkingData] = useState<Parking>([]);
+
+
+  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+    },
+  }));
 
   const methods = useForm({
     defaultValues: {
@@ -74,7 +107,8 @@ const AddParking: React.FC = () => {
 
   const loadParkings = () => {
     const loadParkingData = api.get("ownerParking/"+owner.id_owner_parking).then((response) => {
-      console.log(response)
+      // console.log(response.data.parkings)
+      setParkingData(response.data.parkings);
     })
   }
 
@@ -121,7 +155,7 @@ const AddParking: React.FC = () => {
               <TextInputRHF name="parkingName" label="Nome do Estacionamento" />
             </Grid>
             <Grid item sm={12} md={2}>
-              <TextInputRHF name="vaccantNumber" label="Número de Vagas" />
+              <TextInputRHF name="vaccant_number" label="Número de Vagas" />
             </Grid>
 
             <Grid item sm={12} md={6}>
@@ -139,6 +173,37 @@ const AddParking: React.FC = () => {
           </Grid>
         </Grid>
       </FormProvider>
+
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>Nome</StyledTableCell>
+              <StyledTableCell align="center">Endereço</StyledTableCell>
+              <StyledTableCell align="center">Cidade</StyledTableCell>
+              <StyledTableCell align="center">Vagas</StyledTableCell>
+              <StyledTableCell align="center"></StyledTableCell>
+              <StyledTableCell align="center"></StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {parkingData.map((row: Parking) => (
+              <TableRow
+                key={row.id_parking}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {row.parking_name}
+                </TableCell>
+                <TableCell align="right">{row.address}, {row.address_number}</TableCell>
+                <TableCell align="right">{row.city}/{row.state}</TableCell>
+                <TableCell align="right">{row.vaccant_number}</TableCell>
+                {/* <TableCell align="right">{row.id_parking}</TableCell> */}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </MainCard>
   );
 };
