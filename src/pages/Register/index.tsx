@@ -28,9 +28,7 @@ const Register: React.FC = () => {
   };
 
   const onSubmit = (values: any) => {
-    console.log(values);
     const ownerParking = api.post("ownerParking", values).then((response) => {
-      console.log(response)
       setOwner({
         ownerEmail: response.data.owner_email,
         ownerName: response.data.owner_name,
