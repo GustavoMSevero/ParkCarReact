@@ -124,6 +124,9 @@ const Customer: React.FC = () => {
             <Grid item sm={12} md={4}>
               <TextInputRHF name="box" label="box" />
             </Grid>
+            <Grid item sm={12} md={4}>
+              <TextInputRHF name="price" label="Valor" />
+            </Grid>
 
             <Grid item sm={12} md={12}>
               <Button variant="contained" color="success" type="submit">
