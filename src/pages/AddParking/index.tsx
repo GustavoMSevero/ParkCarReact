@@ -33,7 +33,7 @@ type Parking = {
 
 const AddParking: React.FC = () => {
   const [owner, setOwner] = useAtom(ownerAtom);
-  const [parkingData, setParkingData] = useState<Parking>([]);
+  const [parkingsData, setParkingsData] = useState<Parking>([]);
 
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -107,8 +107,7 @@ const AddParking: React.FC = () => {
 
   const loadParkings = () => {
     const loadParkingData = api.get("ownerParking/"+owner.id_owner_parking).then((response) => {
-      // console.log(response.data.parkings)
-      setParkingData(response.data.parkings);
+      setParkingsData(response.data.parkings);
     })
   }
 
@@ -187,7 +186,7 @@ const AddParking: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {parkingData.map((row: Parking) => (
+            {parkingsData.map((row: Parking) => (
               <TableRow
                 key={row.id_parking}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
